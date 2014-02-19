@@ -69,23 +69,24 @@ WARNING
   def run_assets_precompile_rake_task
     instrument "rails4.run_assets_precompile_rake_task" do
       log("build_ui") do
-        precompile = rake.task("build_ui")
-        return true unless precompile.is_defined?
+        system("grunt production")
+        # precompile = rake.task("build_ui")
+        # return true unless precompile.is_defined?
 
-        # topic("Preparing app for Rails asset pipeline")
+        # # topic("Preparing app for Rails asset pipeline")
 
-        # @cache.load public_assets_folder
-        # @cache.load default_assets_cache
+        # # @cache.load public_assets_folder
+        # # @cache.load default_assets_cache
 
-        precompile.invoke(env: rake_env)
+        # precompile.invoke(env: rake_env)
 
-        if precompile.success?
-          log "build_ui", :status => "success"
-          puts "Building front-end completed (#{"%.2f" % precompile.time}s)"
-        else
-          log "build_ui", :status => "failure"
-          error "Building front-end failed."
-        end
+        # if precompile.success?
+        #   log "build_ui", :status => "success"
+        #   puts "Building front-end completed (#{"%.2f" % precompile.time}s)"
+        # else
+        #   log "build_ui", :status => "failure"
+        #   error "Building front-end failed."
+        # end
       end
     end
   end
