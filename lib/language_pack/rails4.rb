@@ -79,20 +79,13 @@ WARNING
 
         precompile.invoke(env: rake_env)
 
-        # if precompile.success?
-        #   log "assets_precompile", :status => "success"
-        #   puts "Asset precompilation completed (#{"%.2f" % precompile.time}s)"
-
-        #   puts "Cleaning assets"
-        #   rake.task("assets:clean").invoke(env: rake_env)
-
-        #   cleanup_assets_cache
-        #   @cache.store public_assets_folder
-        #   @cache.store default_assets_cache
-        # else
-        #   log "assets_precompile", :status => "failure"
-        #   error "Precompiling assets failed."
-        # end
+        if precompile.success?
+          log "build_ui", :status => "success"
+          puts "Building front-end completed (#{"%.2f" % precompile.time}s)"
+        else
+          log "build_ui", :status => "failure"
+          error "Building front-end failed."
+        end
       end
     end
   end
