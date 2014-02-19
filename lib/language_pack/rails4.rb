@@ -68,36 +68,31 @@ WARNING
 
   def run_assets_precompile_rake_task
     instrument "rails4.run_assets_precompile_rake_task" do
-      log("assets_precompile") do
-        if Dir.glob('public/assets/manifest-*.json').any?
-          puts "Detected manifest file, assuming assets were compiled locally"
-          return true
-        end
-
-        precompile = rake.task("assets:precompile")
+      log("build_ui") do
+        precompile = rake.task("build_ui")
         return true unless precompile.is_defined?
 
-        topic("Preparing app for Rails asset pipeline")
+        # topic("Preparing app for Rails asset pipeline")
 
-        @cache.load public_assets_folder
-        @cache.load default_assets_cache
+        # @cache.load public_assets_folder
+        # @cache.load default_assets_cache
 
         precompile.invoke(env: rake_env)
 
-        if precompile.success?
-          log "assets_precompile", :status => "success"
-          puts "Asset precompilation completed (#{"%.2f" % precompile.time}s)"
+        # if precompile.success?
+        #   log "assets_precompile", :status => "success"
+        #   puts "Asset precompilation completed (#{"%.2f" % precompile.time}s)"
 
-          puts "Cleaning assets"
-          rake.task("assets:clean").invoke(env: rake_env)
+        #   puts "Cleaning assets"
+        #   rake.task("assets:clean").invoke(env: rake_env)
 
-          cleanup_assets_cache
-          @cache.store public_assets_folder
-          @cache.store default_assets_cache
-        else
-          log "assets_precompile", :status => "failure"
-          error "Precompiling assets failed."
-        end
+        #   cleanup_assets_cache
+        #   @cache.store public_assets_folder
+        #   @cache.store default_assets_cache
+        # else
+        #   log "assets_precompile", :status => "failure"
+        #   error "Precompiling assets failed."
+        # end
       end
     end
   end
